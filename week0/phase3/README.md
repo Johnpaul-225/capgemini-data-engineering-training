@@ -1,91 +1,84 @@
-Phase 3 – Final ETL & Pipeline (PySpark)
-Objective
+#  Phase 3 – Final ETL & Pipeline (PySpark)
 
-This phase focuses on building a complete ETL pipeline using PySpark.
-The goal is to read raw data, clean it, apply transformations, and generate useful business insights like customer spending, top customers, and city-wise revenue.
+##  Objective
+Build an end-to-end ETL pipeline using PySpark to process customer and sales data and generate meaningful business insights.
 
-Problem Statement (Summary)
-Read customer and sales data from CSV files
-Perform data cleaning (handle null values and duplicates)
-Join multiple datasets using common keys
-Calculate important metrics like total spend and average order
-Identify business insights (top customers, repeat customers, etc.)
-Generate final outputs for reporting
+---
 
-Detailed problem statement is available in: phase3_problem_statement.pdf
+##  Problem Summary
 
-Dataset Used
-Dataset: Customers & Sales Sample Data
-Source: Spark Playground (/samples/)
-Tables Used:
-customers
-sales
-Approach
-Loaded customer and sales data into PySpark DataFrames
-Inspected data using preview and schema
-Cleaned data by removing null values and duplicates
-Joined datasets using customer_id
-Applied business logic and aggregations
-Generated final outputs for analysis
-Key Transformations
-Data cleaning (dropna, removing duplicates)
-Filtering invalid records (e.g., negative or zero amounts)
-Joins (inner join, left join)
-Aggregations (sum, avg, count)
-Sorting and limiting results
-Output
+- Read customer and sales data from CSV files  
+- Perform data cleaning (handle nulls and duplicates)  
+- Join datasets using customer_id  
+- Calculate key metrics (total spend, average order, etc.)  
+- Identify business insights (top customers, repeat customers)  
+- Generate final outputs for reporting  
 
-This pipeline generates several useful business insights:
+---
 
-🔹 Total Spend Per Customer
+##  Approach
 
-Shows how much each customer has spent in total.
-Helps identify high-value customers and their contribution to revenue.
+- Loaded datasets into PySpark DataFrames  
+- Inspected schema and sample data  
+- Cleaned data by removing nulls and duplicates  
+- Joined datasets using customer_id  
+- Applied aggregations and filters  
+- Generated final outputs  
 
-🔹 Top 3 Customers
+---
 
-Displays the top 3 customers based on total spending.
-Useful for identifying the most important customers for the business.
+##  Key Transformations
 
-🔹 Customers With No Orders
+- Data cleaning using dropna and duplicate removal  
+- Filtering invalid records (amount > 0)  
+- Joins (inner and left join)  
+- Aggregations (sum, avg, count)  
+- Sorting and limiting results  
 
-Lists customers who have not made any purchases.
-Helps identify inactive users for potential marketing efforts.
+---
 
-🔹 Revenue Per City
+##  Output
 
-Shows total revenue generated from each city.
-Helps understand which locations perform best.
+### 🔹 Total Spend Per Customer  
+This shows the total amount spent by each customer across all their purchases.  
+It helps identify high-value customers who contribute the most to overall revenue.
 
-🔹 Average Order Amount
+---
 
-Displays the average amount spent per order by each customer.
-Helps analyze customer spending behavior.
+### 🔹 Top 3 Customers  
+This lists the top 3 customers based on their total spending.  
+It is useful for identifying the most important customers for the business.
 
-🔹 Repeat Customers
+---
 
-Identifies customers who placed more than one order.
-Helps measure customer loyalty and retention.
+### 🔹 Customers With No Orders  
+This identifies customers who have not made any purchases.  
+It helps in finding inactive users who can be targeted through marketing campaigns.
 
-Final Outcome
+---
 
-The pipeline converts raw data into meaningful insights that help in:
+### 🔹 Revenue Per City  
+This shows the total revenue generated from each city.  
+It helps understand which locations are performing well and contributing more to the business.
 
-Identifying valuable customers
-Improving marketing strategies
-Understanding regional performance
-Analyzing customer behavior
-Challenges Faced
-Handling missing and inconsistent data
-Understanding join operations correctly
-Filtering only valid transactions
-Designing the pipeline in proper ETL flow
-Learnings
-Understanding ETL process (Extract → Transform → Load)
-Importance of data cleaning before analysis
-Using joins to combine multiple datasets
-Applying aggregations for business insights
-Building an end-to-end data pipeline
-📁 Files in this Folder
-phase3_problem_statement.pdf → Problem description
-solution.py / notebook → Implementation
+---
+
+### 🔹 Average Order Amount  
+This calculates the average amount spent per order by each customer.  
+It helps analyze customer spending behavior and purchase patterns.
+
+---
+
+### 🔹 Repeat Customers  
+This identifies customers who have placed more than one order.  
+It helps measure customer loyalty and retention.
+
+---
+
+##  Learnings
+
+- Understanding ETL process (Extract → Transform → Load)  
+- Importance of data cleaning  
+- Using joins to combine datasets  
+- Applying aggregations for insights  
+- Building an end-to-end data pipeline  
