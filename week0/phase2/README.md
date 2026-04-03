@@ -73,7 +73,7 @@ Performed the following operations:
 
 ---
 
-## ⚠️ Challenges Faced
+##  Challenges Faced
 
 * Data type issues (e.g., string vs numeric for total_amount)
 * Understanding difference between PySpark functions and Python functions
@@ -82,6 +82,6 @@ Performed the following operations:
 ---
 
 
-## 🚀 Conclusion
+##  Conclusion
 
 This phase helped in building strong fundamentals of big data processing using Apache Spark. It demonstrated how large datasets can be efficiently processed and analyzed to generate business insights.
