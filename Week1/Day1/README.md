@@ -26,8 +26,6 @@ Blank values represented as ``` "blank" or "Blank" ```
 Inconsistent formatting in Country names ```(e.g., india, India)```
 Potential duplicate records
 
-These issues needed to be cleaned before further processing.
-
 ## ETL Process Performed
 
 The dataset was processed through the following ETL steps:
