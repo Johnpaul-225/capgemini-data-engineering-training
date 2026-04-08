@@ -1,114 +1,116 @@
-# 🧹 Data Cleaning & Standardization (PySpark)
+## Day 1- Data Preprocessing
 
-##  Objective
-Clean and standardize a messy dataset using PySpark by handling null values, duplicates, inconsistent formats, and invalid data.
+## Objective
 
----
+The objective of Day 1 training was to understand the basic ```
+ETL (Extract → Transform → Load) ``` workflow using PySpark.
+We worked with a sample dataset and performed several data preprocessing steps such as reading the dataset, cleaning missing values, handling duplicates, and standardizing column values.
 
-##  Problem Summary
+This exercise helped us understand how raw datasets are prepared before performing analytics or building data pipelines.
 
-- Dataset contains inconsistent values (blank, mixed case, duplicates)  
-- Clean and standardize text fields  
-- Handle missing and invalid numeric values  
-- Remove duplicates  
-- Prepare final clean dataset for analysis  
+## Dataset Description
 
----
+The sample dataset contained the following columns:
 
-##  Approach
+- CustomerID – Unique identifier for each customer
+- Name – Name of the customer
+- Country – Country of the customer
+- JoinDate – Date when the customer joined
+- Sales – Sales amount associated with the customer
+- Category – Customer category
 
-- Loaded dataset with customer details  
-- Identified data quality issues (nulls, duplicates, invalid values)  
-- Replaced invalid values like "blank" with null  
-- Standardized country names  
-- Removed duplicates  
-- Converted sales column to numeric  
-- Filled missing values  
-- Sorted final dataset  
+While inspecting the dataset, several issues were observed such as:
 
----
+Missing values in Sales and Category
+Blank values represented as ``` "blank" or "Blank" ```
+Inconsistent formatting in Country names ```(e.g., india, India)```
+Potential duplicate records
 
-##  Key Transformations
+These issues needed to be cleaned before further processing.
 
-- Replaced invalid values (`blank`, `Blank` → null)  
-- Standardized text using `initcap()`  
-- Replaced inconsistent values (`New York` → `USA`)  
-- Removed duplicate rows  
-- Converted `Sales` column to integer  
-- Filled null values (`Sales = 0`, `Category = UNKNOWN`)  
-- Filtered unwanted records  
-- Sorted dataset  
+## ETL Process Performed
 
----
+The dataset was processed through the following ETL steps:
 
-##  Output / Results
+```1️. Data Extraction```
 
-### 🔹 Handling Missing Values  
-Replaced invalid entries like "blank" with null values.  
-Ensures proper handling of missing data.
+The dataset was read from the catalog using PySpark.
+```python
+df = spark.read.csv("/Volumes/day1/default/sample1", header=True, inferSchema=True)
 
----
+df.display()
+df.show()
+```
 
-### 🔹 Standardizing Country Names  
-Converted country names into consistent format (e.g., `india` → `India`).  
-Improves data consistency for analysis.
+```2. Handling Blank Values```
 
----
+Some fields contained "blank" or "Blank" instead of proper null values.
+These were replaced with None so that PySpark can treat them as missing values.
+```python
+df = df.replace(["blank","Blank"], None)
+```
 
-### 🔹 Fixing Inconsistent Data  
-Replaced incorrect values like `New York` with `USA`.  
-Ensures uniform location data.
+```3. Standardizing Country Names```
 
----
+Country names appeared with inconsistent casing such as india and India.
+To maintain consistency, all country names were converted to uppercase.
 
-### 🔹 Removing Duplicates  
-Duplicate records (like repeated customer entries) were removed.  
-Prevents incorrect aggregations.
+```python
+from pyspark.sql.functions import upper, col
 
----
+df = df.withColumn("Country", upper(col("Country")))
+```
 
-### 🔹 Cleaning Sales Column  
-Converted Sales column into numeric format.  
-Invalid values were replaced with null and later filled with 0.
+```4️. Handling Missing Join Dates```
 
----
+If the JoinDate column contained null values, they were handled to ensure proper formatting.
 
-### 🔹 Filling Missing Values  
-- Missing Sales → replaced with 0  
-- Missing Category → replaced with "UNKNOWN"  
+```python
+from pyspark.sql.functions import when
 
-Ensures no null values remain.
+df = df.withColumn("joinDate",
+                   when(col("joinDate").isNull(), None)
+                   .otherwise(col("joinDate")))
+```
 
----
+```5️. Filling Missing Values```
 
-### 🔹 Filtering Data  
-Removed specific unwanted records (CustomerID = 104).  
-Helps clean incorrect or duplicate entries.
+Missing values in Category and Sales were replaced with default values.
 
----
+```python
+Category → "Unknown"
+Sales → "0"
+df = df.fillna({
+    "Category": "Unknown",
+    "Sales": "0"
+})
+```
 
-### 🔹 Final Dataset  
-Sorted clean dataset by CustomerID.  
-Now ready for further analysis or pipeline processing.
+This ensures the dataset does not contain empty values for these columns.
 
----
+```6️. Filtering Data```
 
-##  Learnings
+Records where Sales equals 0 were filtered to inspect customers with no sales activity.
 
-- Real-world data is often messy and inconsistent  
-- Data cleaning is essential before analysis  
-- Standardizing text fields improves data quality  
-- Handling null and invalid values prevents errors  
-- Duplicate removal is critical for accurate results  
+```python
+df = df.filter(col("Sales") == 0)
 
----
+df.display()
+```
 
-##  Reflection
+## Final Output
 
-- Without cleaning, analysis results would be incorrect  
-- Small inconsistencies (like case differences) can cause major issues  
-- Data validation should always be part of the pipeline  
-- Clean data leads to better business decisions  
+After applying the transformations:
 
----
-  
+Blank values were converted to null values
+Country names were standardized
+Missing values were replaced
+Data inconsistencies were resolved
+Filtered records were displayed for analysis
+
+This resulted in a cleaner dataset ready for further analysis or transformation.
+
+## Conclusion
+
+Day 1 training focused on understanding how to clean and preprocess datasets using PySpark.
+Data preprocessing is an important step in any data engineering workflow because raw data often contains inconsistencies.
