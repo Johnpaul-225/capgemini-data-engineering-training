@@ -9,7 +9,7 @@ It includes hands-on practice with PySpark ETL workflows, SQL data analysis, dat
 
 #  Day 1 – Data Preprocessing (PySpark ETL)
 
-## 🎯 Objective
+##  Objective
 Understand the ETL (Extract → Transform → Load) process using PySpark.
 
 ##  Dataset
